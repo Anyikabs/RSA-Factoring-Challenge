@@ -43,7 +43,33 @@ else
         do
 
                 result=$(factor "$i")
-                check_factor $result
+                check_factor $result#!/usr/bin/env bash
+
+check_factor() {
+
+    num1=$(echo "$1" | cut -d' ' -f2)
+
+    num2=$(( $1 / $num1 ))
+
+    echo "$1=$num1*$num2"
+
+}
+
+if [ $# -ne 1 ]; then
+
+    echo 'Usage: factors <file>'
+
+    exit 1
+
+fi
+
+while read -r num; do
+
+    result=$(factor "$num" | tail -n1)
+
+    check_factor "$result"
+
+done < "$1"
 
         done < "$1"
 fi
